@@ -1,0 +1,198 @@
+# Logo key. Use Mod1 for Alt.
+set $mod Mod4
+
+# arrows on this system
+set $left left
+set $down down
+set $up up
+set $right right
+
+set $term kitty 
+
+set $menu wofi --show drun -i -I | xargs swaymsg exec --
+
+xwayland enable
+for_window [shell="xwayland"] title_format "%title [XWayland]"
+
+#output * bg "#000000" fill
+output eDP-1 scale 1.75 
+
+exec swaybg -c "#000000"
+exec dbus-launch gentoo-pipewire-launcher
+exec pactl set-sink-volume 57 20
+exec udiskie --smart-tray
+exec /usr/libexec/polkit-gnome-authentication-agent-1
+exec /usr/libexec/gsd-xsettings
+exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK
+exec gammastep -l 45.30:-122.40
+exec gsettings set org.gnome.desktop.interface text-scaling-factor 1.4
+exec dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP=sway
+
+# waybar
+exec waybar
+exec nm-applet --indicator
+
+# start a terminal
+exec kitty
+
+# set up swayidle
+exec swayidle -w \
+    idlehint 300 \
+    timeout 500 'swaylock -k -f -c 0a0a0a' \
+    timeout 700 'systemctl suspend' \
+#    timeout 700 'systemctl suspend-then-hibernate' \
+    before-sleep 'swaylock -k -f -c 0a0a0a'
+
+# touchpad settings
+input "2362:628:PIXA3854:00_093A:0274_Touchpad" {
+    click_method clickfinger
+    tap_button_map lrm
+    natural_scroll enabled
+    scroll_factor 0.5 
+    middle_emulation disabled
+    accel_profile adaptive 
+}
+
+default_border pixel 10
+hide_edge_borders both
+
+### Key bindings
+    # Lock
+    bindsym $mod+l exec $HOME/.config/swaylock/lock.sh
+
+    # Start a terminal
+    bindsym $mod+Return exec $term
+    bindsym $mod+Shift+v exec pavucontrol
+    bindsym $mod+Shift+l exec swaylock
+
+    bindsym $mod+Escape kill
+
+    bindsym $mod+d exec $menu
+    bindsym $mod+t exec thunar
+
+    floating_modifier $mod normal
+
+    bindsym $mod+Shift+c reload
+
+    bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
+
+    bindsym $mod+$left focus left
+    bindsym $mod+$down focus down
+    bindsym $mod+$up focus up
+    bindsym $mod+$right focus right
+
+    bindsym $mod+Shift+$left move left
+    bindsym $mod+Shift+$down move down
+    bindsym $mod+Shift+$up move up
+    bindsym $mod+Shift+$right move right
+
+    bindsym $mod+F1 exec brightnessctl s 10-
+    bindsym $mod+F2 exec brightnessctl s +10
+    bindsym $mod+F3 exec pactl set-sink-volume @DEFAULT_SINK@ -5%
+    bindsym $mod+F4 exec pactl set-sink-volume @DEFAULT_SINK@ +5%
+    bindsym $mod+F5 exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+
+#
+# Workspaces:
+#
+    # Switch to workspace
+    bindsym $mod+1 workspace 1
+    bindsym $mod+2 workspace 2
+    bindsym $mod+3 workspace 3
+    bindsym $mod+4 workspace 4
+    bindsym $mod+5 workspace 5
+    bindsym $mod+6 workspace 6
+    bindsym $mod+7 workspace 7
+    bindsym $mod+8 workspace 8
+    bindsym $mod+9 workspace 9
+    bindsym $mod+0 workspace 10
+    # Move focused container to workspace
+    bindsym $mod+Shift+1 move container to workspace 1
+    bindsym $mod+Shift+2 move container to workspace 2
+    bindsym $mod+Shift+3 move container to workspace 3
+    bindsym $mod+Shift+4 move container to workspace 4
+    bindsym $mod+Shift+5 move container to workspace 5
+    bindsym $mod+Shift+6 move container to workspace 6
+    bindsym $mod+Shift+7 move container to workspace 7
+    bindsym $mod+Shift+8 move container to workspace 8
+    bindsym $mod+Shift+9 move container to workspace 9
+    bindsym $mod+Shift+0 move container to workspace 10
+
+#
+# Layout stuff:
+#
+    # Split
+    bindsym $mod+h splith
+    bindsym $mod+v splitv
+
+    # Switch the current container between different layout styles
+    bindsym $mod+s layout stacking
+    bindsym $mod+w layout tabbed
+    bindsym $mod+e layout toggle split
+
+    # Make the current focus fullscreen
+    bindsym $mod+f fullscreen
+
+    # Toggle the current focus between tiling and floating mode
+    bindsym $mod+space floating toggle
+
+    # Swap focus between the tiling area and the floating area
+    bindsym $mod+Shift+space focus mode_toggle
+
+    # Move focus to the parent container
+    bindsym $mod+a focus parent
+
+#
+# Resizing containers:
+#
+mode "resize" {
+    bindsym $left resize shrink width 10px
+    bindsym $down resize grow height 10px
+    bindsym $up resize shrink height 10px
+    bindsym $right resize grow width 10px
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+r mode "resize"
+
+# Function keys
+bindsym XF86MonBrightnessDown exec brightnessctl s 10- 
+bindsym XF86MonBrightnessUp exec brightnessctl s 10+
+bindsym Ctrl+XF86MonBrightnessDown exec brightnessctl -d kbd_backlight s 20-
+bindsym Ctrl+XF86MonBrightnessUp exec brightnessctl -d kbd_backlight s 20+
+bindsym XF86AudioPlay exec dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause 
+bindsym XF86AudioNext exec dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next
+bindsym XF86AudioPrev exec dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous 
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume 57 -10%
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 57 +10%
+bindsym XF86AudioMute exec pactl set-sink-mute 57 toggle
+bindsym Print exec grimshot --notify save active
+
+# class                 border  backgr. text    indicator child_border
+client.focused          #000000 #ffffff #000000 #000000   #000000
+client.focused_inactive #000000 #eeeeee #000000 #000000   #000000
+client.unfocused        #000000 #222222 #888888 #000000   #000000
+client.urgent           #2f343a #900000 #ffffff #900000   #900000
+client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
+
+client.background       #ffffff
+
+font pango: Inter, Icons Bold 14
+
+#
+# Status Bar:
+# waybar
+
+# app tweaks
+for_window [app_id="pavucontrol"] floating enable
+for_window [app_id="gnome-control-center"] floating enable
+#for_window [app_id="firefox-esr"] floating on, resize set 1920 1191, focus
+for_window [app_id="kiwix.desktop"] floating on, resize set 1920 1191 
+
+# default GTK theme settings
+exec gsettings set org.gnome.desktop.interface font-name 'Arimo'
+exec gsettings set org.gnome.desktop.interface monospace-font-name 'Arimo'
+exec gsettings set org.gnome.desktop.interface gtk-theme "Adwaita-dark"
+
+include config.d/*

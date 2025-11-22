@@ -1,0 +1,3 @@
+# Mask the upstream dist-kernel virtual so it doesn't try to force kernel upgrades
+virtual/dist-kernel::gentoo
+sys-kernel/gentoo-sources

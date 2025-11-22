@@ -1,0 +1,4 @@
+app-alternatives/awk -gawk mawk
+app-alternatives/gzip -reference pigz
+app-alternatives/gpg reference
+app-alternatives/cpio -gnu libarchive

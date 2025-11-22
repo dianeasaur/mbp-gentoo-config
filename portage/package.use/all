@@ -1,0 +1,48 @@
+app-admin/sudo -sendmail
+app-crypt/gcr gtk
+app-text/poppler cairo
+app-text/xmlto text
+dev-cpp/cairomm X
+dev-cpp/gtkmm X
+dev-lang/rust rustfmt rust-src system-llvm
+dev-libs/elfutils libarchive
+dev-python/pycairo X
+dev-qt/qtbase X
+dev-qt/qtmultimedia qml
+gnome-base/gvfs fuse udisks
+gui-libs/wlroots X
+gui-wm/sway swaynag X
+kde-frameworks/sonnet qml
+mail-client/thunderbird system-icu system-pipewire system-png
+media-gfx/imagemagick postscript tiff
+media-gfx/qrencode png
+media-libs/babl introspection lcms
+media-libs/freetype harfbuzz
+media-libs/gegl introspection lcms cairo
+media-libs/harfbuzz icu
+media-libs/libepoxy X
+media-libs/libglvnd X
+media-libs/libpng apng
+media-libs/libvpx postproc
+media-libs/mesa X ffmpeg
+media-libs/opus custom-modes
+media-video/ffmpeg openh264 openssl qrcode x265
+media-video/pipewire ffmpeg fftw zeroconf sound-server extra lv2
+net-analyzer/nmap libssh2 ncat ndiff nping zenmap
+net-libs/libpcap bluetooth
+net-libs/ngtcp2 -ssl 
+net-libs/nodejs npm
+net-misc/openssh security-key
+net-misc/rsync system-zlib
+net-print/cups openssl zeroconf
+sys-apps/gnome-disk-utility fat
+sys-apps/lshw gtk
+sys-libs/zlib minizip
+virtual/imagemagick-tools postscript tiff png
+www-client/librewolf openh264 hwaccel system-pipewire system-png
+x11-apps/mesa-progs X
+x11-libs/cairo aqua X
+x11-libs/gtk+ X
+x11-libs/libxkbcommon X
+x11-terms/kitty X
+xfce-base/thunar libnotify udisks
