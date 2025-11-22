@@ -1,0 +1,3 @@
+app-arch/tar xattr
+sys-apps/coreutils xattr
+sys-apps/portage xattr
